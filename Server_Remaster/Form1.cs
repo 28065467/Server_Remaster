@@ -226,6 +226,7 @@ namespace Server_Remaster
         void Gameloop(object obj,ElapsedEventArgs args)
         {
             EndRound();
+            Thread.Sleep(5000);
             CheckForNewRound();
             NewRound();
         }
