@@ -225,6 +225,7 @@ namespace Server_Remaster
         private void btn_ServerStart_Click(object sender, EventArgs e)
         {
             Start_Listening();
+            btn_ServerStart.Enabled = false;
         }
 
         private void btn_GameStart_Click(object sender, EventArgs e)
