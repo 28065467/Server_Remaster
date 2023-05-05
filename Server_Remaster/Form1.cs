@@ -168,14 +168,29 @@ namespace Server_Remaster
         }
         void EndRound()
         {
-            SentToAllClient("ER");
+            for(int i = 0; i < 6; i++)
+            {
+                for(int j = 0; j < 6; j++)
+                {
+                    if (Map[i, j])
+                    {
+                        SentToAllClient("BS" + i.ToString() + j.ToString()); //BSxy ex.A bomb is located at (3,2) => BS32
+                    }
+                }
+            }
             for(int i = 1; i <= Players.Count; i++)
             {
                 int Player_X = Players[i.ToString()].x;
                 int Player_Y = Players[i.ToString()].y;
                 if (Map[Player_X, Player_Y])
+                {
                     Players[i.ToString()].Out = true;
+                    SentToAllClient("PLD" + i.ToString() + Player_X.ToString() + Player_Y.ToString()); //PLDixy ex.if player 1 is dead at (1,1) => PLN11
+                }
+                else
+                    SentToAllClient("PLA" + i.ToString() + Player_X.ToString() + Player_Y.ToString());//PLAixy ex.if player 1 is alive at (1,2) => PLY11
             }
+            SentToAllClient("ER");
             Map_Reset();
         }
         void CheckForNewRound()
