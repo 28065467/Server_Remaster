@@ -250,8 +250,11 @@ namespace Server_Remaster
         {
             if (count_for_client_openenUI != Players.Count)
                 MessageBox.Show("There's player who doesn't enter the game");
-            GameStart();
-            timer.Start();
+            else
+            {
+                GameStart();
+                timer.Start();
+            }
         }
         #endregion
         #region LOG
