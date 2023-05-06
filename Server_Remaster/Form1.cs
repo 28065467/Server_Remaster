@@ -12,6 +12,8 @@ using System.Net.Sockets;
 using System.Threading;
 using System.IO;
 using System.Timers;
+using System.Media;
+
 namespace Server_Remaster
 {
     public partial class Form1 : Form
@@ -250,8 +252,13 @@ namespace Server_Remaster
 
         private void btn_GameStart_Click(object sender, EventArgs e)
         {
+            for(int i = 0; i < Players.Count; i++)
+            {
+                string temp = i.ToString();
+                if (Players[temp].Open) { count_for_client_openenUI++; }
+            }
             if (count_for_client_openenUI != Players.Count)
-                MessageBox.Show("There's player who doesn't enter the game");
+                MessageBox.Show("Waiting for other players.");
             else
             {
                 GameStart();

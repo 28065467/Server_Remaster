@@ -18,6 +18,7 @@ namespace Server_Remaster
         public TcpClient tcpClient;
         public bool[,] Bomb_Placed;
         public bool Out = false;
+        public bool Open = false;
         public Form1 form1;
 
         public ClientState(string id , TcpClient input_socket,ref Form1 form)
@@ -64,7 +65,7 @@ namespace Server_Remaster
                             }
                             else if(command == "OP")
                             {
-                                form1.count_for_client_openenUI++;
+                                Open = true;
                             }
                             else
                                 MessageBox.Show(Message_From_Client);
