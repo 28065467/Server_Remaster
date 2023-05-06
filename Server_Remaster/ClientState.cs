@@ -59,6 +59,10 @@ namespace Server_Remaster
                                 x = new_X;
                                 y = new_Y;
                             }
+                            else if(command == "OP")
+                            {
+                                count_for_client_openenUI++;
+                            }
                             else
                                 MessageBox.Show(Message_From_Client);
                             //MessageBox.Show("Sucessfully Receive " + Message_From_Client + " Form Client");

@@ -21,6 +21,7 @@ namespace Server_Remaster
         Dictionary<string, ClientState> Players;
         int Round = 1;
         public System.Timers.Timer timer;
+        public int count_for_client_openenUI;
         //
 
         //Variable For Connection
@@ -41,6 +42,7 @@ namespace Server_Remaster
             Map = new bool[6, 6];
             timer = new System.Timers.Timer(30000);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(Gameloop);
+            count_for_client_openenUI = 0;
             Map_Reset();
 
         }
@@ -246,6 +248,8 @@ namespace Server_Remaster
 
         private void btn_GameStart_Click(object sender, EventArgs e)
         {
+            if (count_for_client_openenUI != Players.Count)
+                MessageBox.Show("There's player who doesn't enter the game");
             GameStart();
             timer.Start();
         }
