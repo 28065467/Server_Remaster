@@ -20,6 +20,7 @@ namespace Server_Remaster
         public bool[,] Map;
         Dictionary<string, ClientState> Players;
         int Round = 1;
+        Form1 for_client_state;
         public System.Timers.Timer timer;
         public int count_for_client_openenUI;
         //
@@ -40,6 +41,7 @@ namespace Server_Remaster
             //Initial Game Variable
             Players = new Dictionary<string, ClientState>();
             Map = new bool[6, 6];
+            for_client_state = this;
             timer = new System.Timers.Timer(30000);
             timer.Elapsed += new System.Timers.ElapsedEventHandler(Gameloop);
             count_for_client_openenUI = 0;
@@ -80,7 +82,7 @@ namespace Server_Remaster
                 {
                     if (new_client.Connected)
                     {
-                        Players.Add(Client_ID.ToString(), new ClientState(Client_ID.ToString(), new_client));
+                        Players.Add(Client_ID.ToString(), new ClientState(Client_ID.ToString(), new_client,ref for_client_state));
                         SentToSingleClient(Client_ID, "ID"+Client_ID.ToString());
                         ADD_TO_LOG("Client " + Client_ID.ToString() + " :" + new_client.Client.RemoteEndPoint + " is joined");
                         Client_ID++;

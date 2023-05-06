@@ -7,9 +7,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
+using Server_Remaster;
 namespace Server_Remaster
 {
-    internal class ClientState:Form1
+    internal class ClientState
     {
         public int x;
         public int y;
@@ -17,12 +18,14 @@ namespace Server_Remaster
         public TcpClient tcpClient;
         public bool[,] Bomb_Placed;
         public bool Out = false;
+        public Form1 form1;
 
-        public ClientState(string id , TcpClient input_socket)
+        public ClientState(string id , TcpClient input_socket,ref Form1 form)
         {
             ID = id;
             tcpClient = input_socket;
             Thread thread = new Thread(Client_Listening);
+            form1 = form;
             thread.IsBackground = true;
             thread.Start();
         }
@@ -50,7 +53,7 @@ namespace Server_Remaster
                             {
                                 int x = int.Parse(Message_From_Client.Substring(2, 1));
                                 int y = int.Parse(Message_From_Client.Substring(3, 1));
-                                Map[x, y] = true;
+                                form1.Map[x, y] = true;
                             }
                             else if (command == "PL")//ex.PL33 => Player is At (3,3)
                             {
@@ -61,7 +64,7 @@ namespace Server_Remaster
                             }
                             else if(command == "OP")
                             {
-                                count_for_client_openenUI++;
+                                form1.count_for_client_openenUI++;
                             }
                             else
                                 MessageBox.Show(Message_From_Client);
