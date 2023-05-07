@@ -20,7 +20,7 @@ namespace Server_Remaster
     {
         //Variable For Game
         public bool[,] Map;
-        Dictionary<string, ClientState> Players;
+        public Dictionary<string, ClientState> Players;
         int Round = 1;
         Form1 for_client_state;
         public System.Timers.Timer timer;
@@ -132,6 +132,7 @@ namespace Server_Remaster
                 {
                     networkStream.Write(data, 0, data.Length);
                     ADD_TO_LOG("Message '" + Mesaage + "' is sent to Client " + Client_ID);
+                    Thread.Sleep(50);
                 }
                 else
                     ADD_TO_LOG("Fail to sent to Client " + Client_ID);
@@ -167,7 +168,7 @@ namespace Server_Remaster
                 for(int j = 1; j <= Players.Count; j++)
                 {
                     if (j != i)
-                        SentToSingleClient(i, "NP" + j.ToString() + Players[j.ToString()].x.ToString() + Players[j.ToString()].y.ToString());
+                        SentToSingleClient(i, "PP" + j.ToString() + Players[j.ToString()].x.ToString() + Players[j.ToString()].y.ToString());
                 }
             }
             SentToAllClient("GS" + Round.ToString());
@@ -252,13 +253,15 @@ namespace Server_Remaster
 
         private void btn_GameStart_Click(object sender, EventArgs e)
         {
-            for(int i = 0; i < Players.Count; i++)
+            /*for(int i = 0; i < Players.Count; i++)
             {
                 string temp = i.ToString();
                 if (Players[temp].Open) { count_for_client_openenUI++; }
             }
+            */
+
             if (count_for_client_openenUI != Players.Count)
-                MessageBox.Show("Waiting for other players.");
+                MessageBox.Show("There is only " +count_for_client_openenUI.ToString()+" players");
             else
             {
                 GameStart();

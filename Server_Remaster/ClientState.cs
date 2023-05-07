@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using Server_Remaster;
 namespace Server_Remaster
 {
-    internal class ClientState
+    public class ClientState
     {
         public int x;
         public int y;
@@ -65,7 +65,14 @@ namespace Server_Remaster
                             }
                             else if(command == "OP")
                             {
-                                Open = true;
+                                //Open = true;
+                                form1.count_for_client_openenUI++;
+                                for (int i = 1; i < int.Parse(ID); i++)
+                                {
+                                    form1.SentToSingleClient(i, "NP" + ID);
+                                    form1.SentToSingleClient(int.Parse(ID), "NP" + form1.Players[i.ToString()].GetID());
+
+                                }
                             }
                             else
                                 MessageBox.Show(Message_From_Client);
@@ -87,6 +94,10 @@ namespace Server_Remaster
             else { x = 5; }
             if (tmp % 2 == 0) { y = 0; }
             else { y = 5; }
+        }
+        public string GetID()
+        {
+            return ID;
         }
     }
 }
