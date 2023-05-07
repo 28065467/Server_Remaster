@@ -161,14 +161,30 @@ namespace Server_Remaster
         #region GameControl
         void GameStart()
         {
-            for (int i = 1; i <= Players.Count; i++)
-                Players[i.ToString()].Start_Position_Set();
-            for(int i = 1; i <= Players.Count; i++)
+            foreach (KeyValuePair<string, ClientState> user in Players)
             {
-                for(int j = 1; j <= Players.Count; j++)
+                foreach (KeyValuePair<string, ClientState> player in Players)
                 {
-                    if (j != i)
-                        SentToSingleClient(i, "PP" + j.ToString() + Players[j.ToString()].x.ToString() + Players[j.ToString()].y.ToString());
+                    if (user.Key != player.Key)
+                    {
+                        SentToSingleClient(int.Parse(user.Key), "NP" + player.Key);
+                    }
+                }
+            }
+
+            foreach (KeyValuePair<string, ClientState> player in Players)
+            {
+                player.Value.Start_Position_Set();
+            }
+
+            foreach (KeyValuePair<string, ClientState> user in Players)
+            {
+                foreach (KeyValuePair<string, ClientState> player in Players)
+                {
+                    if(user.Key != player.Key)
+                    {
+                        SentToSingleClient(int.Parse(user.Key), "PP" + player.Key + player.Value.x + player.Value.y);
+                    }
                 }
             }
             SentToAllClient("GS" + Round.ToString());
@@ -259,7 +275,6 @@ namespace Server_Remaster
                 if (Players[temp].Open) { count_for_client_openenUI++; }
             }
             */
-
             if (count_for_client_openenUI != Players.Count)
                 MessageBox.Show("There is only " +count_for_client_openenUI.ToString()+" players");
             else
